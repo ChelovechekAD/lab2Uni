@@ -56,7 +56,11 @@ public class App
         System.out.println(classUniList.get(0));
         classUniDAO.delete(classUniList.get(0).getId());
 
+        System.out.println(professorList.get(0));
+        professorDAO.delete(professorList.get(0).getId());
+
         List<Auditory> auditories = new ArrayList<>(disciplineList.get(0).getAuditoryList());
+
         ProfessorInfoDTORequest professorInfoDTORequest = ProfessorInfoDTORequest.builder()
                 .auditoryNum(auditories.get(0).getAuditoryNum())
                 .dayOfWeek(disciplineList.get(0).getDayOfWeek())
