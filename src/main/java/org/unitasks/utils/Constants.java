@@ -5,12 +5,6 @@ import java.util.Random;
 
 public interface Constants {
     Random RANDOM = new Random();
-    String SOMETHING_WENT_WRONG_DURING_EXECUTE_TRANSACTIONS_METHODS =
-            "Something went wrong during execute transaction's methods.";
-    String ENTITY_MANAGER_IS_NOT_ALIVE = "Entity Manager is not alive.";
-    String TRANSACTION_IS_NOT_ACTIVE = "Transaction is not active.";
-    String ROLLBACK_ABORTED_SOMETHING_WENT_WRONG = "Rollback aborted. Something went wrong.";
-    String COMMIT_ABORTED_SOMETHING_WENT_WRONG = "Commit aborted. Something went wrong.";
     String NULL_EXCEPTION_MESSAGE = "Try to use null object. Aborted.";
     List<String> LIST_OF_PROF_NAMES_M = List.of("Artem", "Oleg", "Nikita", "Anton", "Semen", "Maksim");
     List<String> LIST_OF_PROF_NAMES_W = List.of("Olga", "Anastasia", "Karina", "Aleksandra");

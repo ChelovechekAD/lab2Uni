@@ -2,6 +2,8 @@ package org.unitasks.models;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,11 +33,12 @@ public class Discipline implements Serializable {
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "discipline_auditory",
             joinColumns = {@JoinColumn(name = "discipline_id")},
             inverseJoinColumns = {@JoinColumn(name = "auditory_id")}
     )
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @Builder.Default
     private Set<Auditory> auditoryList = new HashSet<>();
 

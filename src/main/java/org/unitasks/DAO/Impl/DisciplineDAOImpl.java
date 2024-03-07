@@ -19,9 +19,7 @@ public class DisciplineDAOImpl extends DAOImpl<Discipline, Integer> implements D
                     .createQuery("delete from ClassUni c where c.classPK.discipline = " + discipline.getId())
                     .executeUpdate();
             transactionHelper.remove(discipline);
-            Discipline discipline1 = transactionHelper.find(getClazz(), id);
-            transactionHelper.commit();
-            return discipline1;
+            return transactionHelper.find(getClazz(), id);
         };
         return transactionHelper.transaction(del) == null;
     }

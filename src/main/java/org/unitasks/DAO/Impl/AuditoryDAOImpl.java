@@ -13,20 +13,4 @@ public class AuditoryDAOImpl extends DAOImpl<Auditory, Integer> implements Audit
         return Auditory.class;
     }
 
-    @Override
-    public boolean delete(Integer id) {
-        EntityManager em = HibernateUtil.getEntityManager();
-        transactionHelper.begin();
-        try {
-            Auditory auditory = transactionHelper.find(getClazz(), id);
-            transactionHelper.remove(auditory);
-            Auditory auditory1 = transactionHelper.find(getClazz(), id);
-            transactionHelper.commit();
-            return auditory1 == null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            transactionHelper.rollback();
-        }
-        return false;
-    }
 }

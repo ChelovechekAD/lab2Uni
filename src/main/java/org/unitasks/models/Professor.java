@@ -2,6 +2,8 @@ package org.unitasks.models;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,8 +33,9 @@ public class Professor implements Serializable {
     @Column(name = "middle_name")
     private String middleName;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "professor_id")
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<Discipline> disciplineList;
 
     public void addDiscipline(Discipline discipline){
