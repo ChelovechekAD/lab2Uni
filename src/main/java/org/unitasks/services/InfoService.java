@@ -71,20 +71,18 @@ public final class InfoService {
 
     public List<CountClassesEachDayDTOResponse> getDaysWithCountOfClassesGE(Long count) {
 
-        CriteriaQuery<DayOfWeek> cq = criteriaBuilder.createQuery(DayOfWeek.class);
+        CriteriaQuery<CountClassesEachDayDTOResponse> cq = criteriaBuilder.createQuery(CountClassesEachDayDTOResponse.class);
         Root<ClassUni> root = cq.from(ClassUni.class);
 
         Join<ClassUni, ClassPK> classUniClassPKJoin = root.join("classPK");
         Join<ClassPK, Discipline> disciplineJoin = classUniClassPKJoin.join("discipline");
-        //TODO Из селетка вернуть день недели и сумму занятий в этот день. Хз как запихнуть это в дто.
-        cq.select(disciplineJoin.get("dayOfWeek")/*, CRITERIA_BUILDER.sum(root.get("countOfClass"))*/)
+        cq.multiselect(disciplineJoin.get("dayOfWeek"), criteriaBuilder.sum(root.get("countOfClass")))
                 .groupBy(disciplineJoin.get("dayOfWeek"))
                 .having(criteriaBuilder.ge(criteriaBuilder.sum(root.get("countOfClass")), count));
-        transactionHelper.entityManager().createQuery(cq).getResultList().forEach(System.out::println);
-        return null;
+        return transactionHelper.entityManager().createQuery(cq).getResultList();
     }
 
-    public List<DayOfWeek> getDaysByCountAuditoryGE(Long count){
+    public List<DayOfWeek> getDaysByCountAuditoryGE(Long count) {
         CriteriaQuery<DayOfWeek> cq = criteriaBuilder.createQuery(DayOfWeek.class);
         Root<Discipline> root = cq.from(Discipline.class);
 

@@ -7,17 +7,17 @@ import java.util.function.Supplier;
 
 public final class TransactionHelper {
 
+    private static TransactionHelper transactionHelper;
     private EntityManager entityManager;
     private CriteriaBuilder criteriaBuilder;
     private Metamodel metamodel;
-    private static TransactionHelper transactionHelper;
 
     private TransactionHelper() {
         this.entityManager = HibernateUtil.getEntityManager();
     }
 
-    public static TransactionHelper getTransactionHelper(){
-        if (transactionHelper == null){
+    public static TransactionHelper getTransactionHelper() {
+        if (transactionHelper == null) {
             transactionHelper = new TransactionHelper();
         }
         return transactionHelper;
@@ -49,7 +49,8 @@ public final class TransactionHelper {
         getEntityManagerIfClosed();
         return entityManager;
     }
-    public void closeEntityManager(){
+
+    public void closeEntityManager() {
         entityManager.close();
     }
 

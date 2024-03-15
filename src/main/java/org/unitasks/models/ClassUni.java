@@ -1,7 +1,6 @@
 package org.unitasks.models;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.unitasks.models.embeddable.ClassPK;
 
 import javax.persistence.*;

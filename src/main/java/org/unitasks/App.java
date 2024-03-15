@@ -21,10 +21,8 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
         AuditoryDAO auditoryDAO = new AuditoryDAOImpl();
         ClassUniDAO classUniDAO = new ClassUniDAOImpl();
         DisciplineDAO disciplineDAO = new DisciplineDAOImpl();
@@ -36,7 +34,7 @@ public class App
 
         GeneratedDataDTOResponse generatedDataDTOResponse = taskController.doThis();
 
-        if (generatedDataDTOResponse == null){
+        if (generatedDataDTOResponse == null) {
             throw new RuntimeException("NO DATA GENERATED");
         }
 
@@ -44,7 +42,6 @@ public class App
         List<Discipline> disciplineList = generatedDataDTOResponse.getDisciplineList();
         List<ClassUni> classUniList = generatedDataDTOResponse.getClassUniList();
         List<Professor> professorList = generatedDataDTOResponse.getProfessorList();
-
 
 
         System.out.println(auditoryList.get(1));
@@ -72,8 +69,9 @@ public class App
         System.out.println("\nService 2:");
         taskController.getProfInfoByParam(DayOfWeek.FRIDAY);
 
-        infoService.getDaysWithCountOfClassesGE(20L);
-        System.out.println();
+        System.out.println("\nService 3:");
+        taskController.getDaysByCountOfClassesGE(20L);
+
 
         System.out.println("\nService 4:");
         infoService.getDaysByCountAuditoryGE(20L).forEach(System.out::println);

@@ -30,7 +30,7 @@ public class DataGenerateService {
 
     private final TransactionHelper transactionHelper = TransactionHelper.getTransactionHelper();
 
-    public GeneratedDataDTOResponse generateTestData(){
+    public GeneratedDataDTOResponse generateTestData() {
 
         List<Professor> professorList = DataGenerator.generateProfessorList(10);
         List<Discipline> disciplineList = DataGenerator.generateDisciplineList(30);
@@ -38,14 +38,14 @@ public class DataGenerateService {
 
         IntStream.range(0, disciplineList.size())
                 .forEach(i -> IntStream.range(0, 10)
-                        .forEach(j->disciplineList.get(i).addAuditory(
+                        .forEach(j -> disciplineList.get(i).addAuditory(
                                 auditoryList.get(Constants.RANDOM.nextInt(auditoryList.size())))));
 
         IntStream.range(0, professorList.size())
                 .forEach(i -> {
                     professorList.get(i).addDiscipline(disciplineList.get(i));
-                    professorList.get(i).addDiscipline(disciplineList.get(10+i));
-                    professorList.get(i).addDiscipline(disciplineList.get(20+i));
+                    professorList.get(i).addDiscipline(disciplineList.get(10 + i));
+                    professorList.get(i).addDiscipline(disciplineList.get(20 + i));
                 });
 
         List<ClassUni> classUniList = DataGenerator.generateClassUniList(50, professorList, disciplineList);
@@ -58,7 +58,7 @@ public class DataGenerateService {
             return true;
         };
 
-        if (Boolean.TRUE.equals(transactionHelper.transaction(save))){
+        if (Boolean.TRUE.equals(transactionHelper.transaction(save))) {
 
             return GeneratedDataDTOResponse.builder()
                     .classUniList(classUniList)

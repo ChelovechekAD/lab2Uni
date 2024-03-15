@@ -1,15 +1,17 @@
 package org.unitasks.DTO.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class CountClassesEachDayDTOResponse {
     private DayOfWeek dayOfWeek;
-    private Integer countOfClasses;
+    private Long countOfClasses;
 }

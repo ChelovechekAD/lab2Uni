@@ -1,14 +1,9 @@
 package org.unitasks.DAO.Impl;
 
 import org.unitasks.DAO.ProfessorDAO;
-import org.unitasks.models.Discipline;
 import org.unitasks.models.Professor;
 import org.unitasks.utils.Constants;
 
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
 import java.util.function.Supplier;
 
 public class ProfessorDAOImpl extends DAOImpl<Professor, Integer> implements ProfessorDAO {
@@ -18,7 +13,7 @@ public class ProfessorDAOImpl extends DAOImpl<Professor, Integer> implements Pro
     }
 
     @Override
-    public boolean delete(Integer id){
+    public boolean delete(Integer id) {
         Supplier<Professor> del = () -> {
             Professor professor = transactionHelper.find(getClazz(), id);
             assert professor != null : Constants.NULL_EXCEPTION_MESSAGE;

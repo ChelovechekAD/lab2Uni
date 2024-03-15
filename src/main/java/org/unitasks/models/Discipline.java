@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,15 +41,15 @@ public class Discipline implements Serializable {
     @Builder.Default
     private Set<Auditory> auditoryList = new HashSet<>();
 
-    public void addAuditory(Auditory auditory){
+    public void addAuditory(Auditory auditory) {
         auditoryList.add(auditory);
     }
 
-    public void setAuditoryList(Set<Auditory> auditoryList){
+    public void setAuditoryList(Set<Auditory> auditoryList) {
         this.auditoryList = auditoryList;
     }
 
-    public void removeAuditory(Auditory auditory){
+    public void removeAuditory(Auditory auditory) {
         auditoryList.remove(auditory);
         auditory.getDisciplineList().remove(this);
     }
