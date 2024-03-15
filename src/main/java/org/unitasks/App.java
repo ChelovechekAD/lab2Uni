@@ -8,6 +8,7 @@ import org.unitasks.DAO.Impl.ClassUniDAOImpl;
 import org.unitasks.DAO.Impl.DisciplineDAOImpl;
 import org.unitasks.DAO.Impl.ProfessorDAOImpl;
 import org.unitasks.DAO.ProfessorDAO;
+import org.unitasks.DTO.request.ProfessorInfoDTORequest;
 import org.unitasks.DTO.response.GeneratedDataDTOResponse;
 import org.unitasks.controllers.TaskController;
 import org.unitasks.models.Auditory;
@@ -15,22 +16,13 @@ import org.unitasks.models.ClassUni;
 import org.unitasks.models.Discipline;
 import org.unitasks.models.Professor;
 import org.unitasks.services.InfoService;
-import org.unitasks.utils.Constants;
-import org.unitasks.utils.DataGenerator;
-import org.unitasks.utils.HibernateUtil;
 
-import javax.persistence.EntityManager;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.IntStream;
 
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
         AuditoryDAO auditoryDAO = new AuditoryDAOImpl();
         ClassUniDAO classUniDAO = new ClassUniDAOImpl();
         DisciplineDAO disciplineDAO = new DisciplineDAOImpl();
@@ -42,7 +34,7 @@ public class App
 
         GeneratedDataDTOResponse generatedDataDTOResponse = taskController.doThis();
 
-        if (generatedDataDTOResponse == null){
+        if (generatedDataDTOResponse == null) {
             throw new RuntimeException("NO DATA GENERATED");
         }
 
@@ -50,7 +42,6 @@ public class App
         List<Discipline> disciplineList = generatedDataDTOResponse.getDisciplineList();
         List<ClassUni> classUniList = generatedDataDTOResponse.getClassUniList();
         List<Professor> professorList = generatedDataDTOResponse.getProfessorList();
-
 
 
         System.out.println(auditoryList.get(1));
@@ -62,11 +53,28 @@ public class App
         System.out.println(classUniList.get(0));
         classUniDAO.delete(classUniList.get(0).getId());
 
+        System.out.println(professorList.get(0));
+        professorDAO.delete(professorList.get(0).getId());
+
         List<Auditory> auditories = new ArrayList<>(disciplineList.get(0).getAuditoryList());
-        infoService.getAllProfWithClassesOnDayAndAuditoryNum(disciplineList.get(0).getDayOfWeek(), auditories.get(0).getAuditoryNum())
-                .forEach(System.out::println);
-        infoService.getAllProfWithoutClassesOnTheSelectedDay(DayOfWeek.FRIDAY).forEach(System.out::println);
-        infoService.getAllDaysWithCountOfClassesMoreThen(20);
+
+        ProfessorInfoDTORequest professorInfoDTORequest = ProfessorInfoDTORequest.builder()
+                .auditoryNum(auditories.get(0).getAuditoryNum())
+                .dayOfWeek(disciplineList.get(0).getDayOfWeek())
+                .build();
+
+        System.out.println("\nService 1:");
+        taskController.getProfInfoByParam(professorInfoDTORequest);
+
+        System.out.println("\nService 2:");
+        taskController.getProfInfoByParam(DayOfWeek.FRIDAY);
+
+        System.out.println("\nService 3:");
+        taskController.getDaysByCountOfClassesGE(20L);
+
+
+        System.out.println("\nService 4:");
+        infoService.getDaysByCountAuditoryGE(20L).forEach(System.out::println);
     }
 
 }

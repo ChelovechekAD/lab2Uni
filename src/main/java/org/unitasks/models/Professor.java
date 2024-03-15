@@ -2,16 +2,17 @@ package org.unitasks.models;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode (exclude = "disciplineList")
-@ToString (exclude = "disciplineList")
+@EqualsAndHashCode(exclude = "disciplineList")
+@ToString(exclude = "disciplineList")
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
@@ -31,19 +32,20 @@ public class Professor implements Serializable {
     @Column(name = "middle_name")
     private String middleName;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "professor_id")
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<Discipline> disciplineList;
 
-    public void addDiscipline(Discipline discipline){
+    public void addDiscipline(Discipline discipline) {
         disciplineList.add(discipline);
     }
 
-    public void setDisciplineList(Set<Discipline> disciplineList){
+    public void setDisciplineList(Set<Discipline> disciplineList) {
         this.disciplineList = disciplineList;
     }
 
-    public void removeDiscipline(Discipline discipline){
+    public void removeDiscipline(Discipline discipline) {
         disciplineList.remove(discipline);
     }
 

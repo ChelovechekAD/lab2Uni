@@ -2,12 +2,13 @@ package org.unitasks.models;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,23 +32,24 @@ public class Discipline implements Serializable {
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "discipline_auditory",
             joinColumns = {@JoinColumn(name = "discipline_id")},
             inverseJoinColumns = {@JoinColumn(name = "auditory_id")}
     )
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @Builder.Default
     private Set<Auditory> auditoryList = new HashSet<>();
 
-    public void addAuditory(Auditory auditory){
+    public void addAuditory(Auditory auditory) {
         auditoryList.add(auditory);
     }
 
-    public void setAuditoryList(Set<Auditory> auditoryList){
+    public void setAuditoryList(Set<Auditory> auditoryList) {
         this.auditoryList = auditoryList;
     }
 
-    public void removeAuditory(Auditory auditory){
+    public void removeAuditory(Auditory auditory) {
         auditoryList.remove(auditory);
         auditory.getDisciplineList().remove(this);
     }

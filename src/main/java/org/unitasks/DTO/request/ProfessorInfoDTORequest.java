@@ -1,4 +1,4 @@
-package org.unitasks.DTO.response;
+package org.unitasks.DTO.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,11 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 
+
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class CountClassesEachDayDTOResponse {
+@NoArgsConstructor
+public class ProfessorInfoDTORequest {
+
     private DayOfWeek dayOfWeek;
-    private Long countOfClasses;
+    private String auditoryNum;
+
 }
